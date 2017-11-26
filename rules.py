@@ -54,6 +54,13 @@ class ConstructorRule(AbstractRule,metaclass=ABCMeta):
         super().__init__(False, float('inf'))
         self._parameters = value
 
+    @abstractmethod
+    def rankImplemented(self):
+        """
+        Return true if the functions needed by rank are implemented
+        Return false otherwise
+        """
+
     @property
     def rules(self):
         return tuple(map(lambda p : self._grammar[p], self._parameters))
@@ -68,6 +75,9 @@ class UnionRule(ConstructorRule):
         super().__init__((rule1, rule2))
         self._origin=origin
         self._objSize=objSize
+
+    def rankImplemented(self):
+        return not (self._origin == None or self._objSize == None)
         
     def __repr__(self):
         return "UnionRule({},{})".format(self._parameters[0],self._parameters[1])
@@ -108,6 +118,8 @@ class UnionRule(ConstructorRule):
 
         rule1, rule2 = self.rules
 
+        #print("Looking for origin of obj={}".format(obj))
+
         if self._origin(obj) == 0:
             return rule1.rank(obj) #obj originated from rule1
         else: #originated from rule2
@@ -121,6 +133,10 @@ class ProductRule(ConstructorRule):
         self._cons = cons
         self._uncons = uncons
         self._objSize = objSize
+
+    def rankImplemented(self):
+        return not (self._uncons == None or self._objSize == None)
+     
     
     def __repr__(self):
         return "ProductRule({},{})".format(self._parameters[0],self._parameters[1])
@@ -217,8 +233,13 @@ class SequenceRule(ConstructorRule):
     def __repr__(self):
         return "SequenceRule({},{})".format(self._parameters[0], self._parameters[1])
 
+
+    def rankImplemented(self):
+        return not (self._uncons == None or self._objSize == None)
+
+
     def _calc_valuation(self):
-        self._valuation = 0
+        self._valuation = 0 #Le plus petit objet est un EpsilonRule = 0
 
     @lru_cache(maxsize=CACHE_MAX_SIZE)
     def count(self, n):
@@ -306,7 +327,7 @@ class SequenceRule(ConstructorRule):
             count_before += nonterm.count(i) * self.count(n-i)
 
         #À ce comptage on rajoute le rang d'obj1 * le nombre d'éléments dans
-        # rule2 de taille (n - size_obj1) = size_obj2
+        # rule2 de taille [(n - size_obj1) = size_obj2]
 
 
         return count_before + rank_obj2 + rank_obj1 * self.count(n - size_obj1)
@@ -322,6 +343,11 @@ class BoundRule(ConstructorRule):
         self._lb = lower_bound
         self._ub = upper_bound
         self._rule = rule
+
+
+    def rankImplemented(self):
+        return True
+
 
     def __repr__(self):
         return "BoundRule({}, {}, {})".format(self._rule, self._lb, self._ub)

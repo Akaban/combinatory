@@ -9,9 +9,27 @@
 
 from binarytree import BinaryTree, Leaf
 from rules import UnionRule, ProductRule, EpsilonRule, SingletonRule, init_grammar
+from examplegrammars import grammarDict
+from random import randint
 
 def runTest(gram,max_size=15):
-    
+
+    def testRank(size, n_samples=10):
+        """
+        Run tests on the rank methods using n_samples random samples from a random size set.
+        """
+
+        setsize = gram.count(size)
+
+        if setsize==0:
+            return
+
+        n_samples = min(n_samples, setsize)
+
+        samples = [randint(0,setsize-1) for _ in range(n_samples)]
+
+        assert(all((gram.rank(gram.unrank(size,x)) == x for x in samples)))
+
     def testUnrank(size, n_samples=5):
         """
         Run tests on the unrank methods using n_samples random samples from a random size set.
@@ -57,5 +75,21 @@ def runTest(gram,max_size=15):
     for n in range(max_size):
         testCountList(n)
     print("testCountList: passed")
+    if gram.rankImplemented():
+        for n in range(max_size):
+                testRank(n)
+        print("testRank: passed")
 
+    else:
+        print("Rank is not implemented for this grammar. Skip test.")
+
+print("Starting tests...")
+
+for gramName, gram in grammarDict.items():
+
+    print("Testing {}".format(gramName))
+
+
+    gramDef, gramStartingRule = gram
+    runTest(gramDef[gramStartingRule])
 
