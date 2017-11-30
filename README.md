@@ -30,10 +30,10 @@ The requirements are the following,
 
 ## Combinatorials methods
 
-In the following `self` denotes an `AbstractRule` object,
+In the following, `rule` denotes an `AbstractRule` object,
 
-  * self.count(n): returns the number of objects of weight n in the grammar
-  * self.list(n): returns the objects of weight n in the grammar as a list
-  * self.unrank(n, rank): return the object of index rank (0-based indexing) in the elements list of weight n
-  * self.rank(obj): return the rank of obj in the list of elements that are the same size of obj, this needs two additional functions that has to be implemented by the grammar in order to work.
+  * rule.count(n): returns the number of objects of weight n generable the rule
+  * rule.list(n): returns the objects of weight n generable by the rule as a list
+  * rule.unrank(n, rank): return the object of index rank (0-based indexing) in the elements' list of weight n generable by the rule
+  * rule.rank(obj): return the rank of obj in the list of elements that are the same size as obj, this needs two additional functions that has to be implemented by the grammar in order to work.
 
