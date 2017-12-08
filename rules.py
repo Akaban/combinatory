@@ -77,7 +77,7 @@ class UnionRule(ConstructorRule):
         self._objSize=objSize
 
     def rankImplemented(self):
-        return not (self._origin == None or self._objSize == None)
+        return not (self._origin is None or self._objSize is None)
         
     def __repr__(self):
         return "UnionRule({},{})".format(self._parameters[0],self._parameters[1])
@@ -113,7 +113,7 @@ class UnionRule(ConstructorRule):
 
     def rank(self, obj):
 
-        if self._origin == None or self._objSize == None:
+        if self._origin is None or self._objSize is None:
             raise ValueError("Origin function or objSize function is undefined, cannot continue.")
 
         rule1, rule2 = self.rules
@@ -135,7 +135,7 @@ class ProductRule(ConstructorRule):
         self._objSize = objSize
 
     def rankImplemented(self):
-        return not (self._uncons == None or self._objSize == None)
+        return not (self._uncons is None or self._objSize is None)
      
     
     def __repr__(self):
@@ -196,7 +196,7 @@ class ProductRule(ConstructorRule):
 
     def rank(self, obj):
 
-        if self._uncons == None or self._objSize == None:
+        if self._uncons is None or self._objSize is None:
             raise ValueError("Uncons function or objSize function is undefined, cannot continue.")
 
         rule1, rule2 = self.rules
@@ -235,7 +235,7 @@ class SequenceRule(ConstructorRule):
 
 
     def rankImplemented(self):
-        return not (self._uncons == None or self._objSize == None)
+        return not (self._uncons is None or self._objSize is None)
 
 
     def _calc_valuation(self):
@@ -309,7 +309,7 @@ class SequenceRule(ConstructorRule):
         if obj == vide._object:
             return 0
 
-        if self._uncons == None or self._objSize == None:
+        if self._uncons is None or self._objSize is None:
             raise ValueError("Uncons function or objSize function is undefined, cannot continue.")
 
 
@@ -384,7 +384,7 @@ class BoundRule(ConstructorRule):
         if isinstance(self._rule, ConstantRule):
             return self._rule.unrank(obj)
 
-        if self._rule._objSize == None:
+        if self._rule._objSize is None:
             raise ValueError("{} has not defined objSize".format(self._rule))
 
 
