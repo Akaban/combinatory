@@ -35,5 +35,5 @@ In the following, `rule` denotes an `AbstractRule` object,
   * rule.count(n): returns the number of objects of weight n generable by the rule
   * rule.list(n): returns the objects of weight n generable by the rule as a list
   * rule.unrank(n, rank): return the object of index rank (0-based indexing) in the elements' list of weight n generable by the rule
-  * rule.rank(obj): return the rank of obj in the list of elements that are the same size as obj, this needs two additional functions that has to be implemented by the grammar in order to work.
+  * rule.rank(obj): return the rank of obj in the list of elements that are the same size as obj, this needs two additional functions that have to be implemented by the grammar in order to work.
 

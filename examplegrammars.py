@@ -81,21 +81,21 @@ No3ConsecutiveGram = {
 "Vide" : EpsilonRule("") ,
 "A" : SingletonRule("A"),
 "B" : SingletonRule("B"),
-"S" : UnionRule("Vide","2letterleft",lambda w: 0 if w=="" else 1,sizestr),
-"2letterleft" : UnionRule("a_2aleft","b_2bleft",lambda w: 0 if w[0]=="A" else 1,sizestr),
+"S" : UnionRule("Vide","2letterleft"),
+"2letterleft" : UnionRule("a_2aleft","b_2bleft"),
 
-"a_2aleft" : ProductRule("A", "1aleft",stringsum,lambda w: (w[0], w[1:]), sizestr),
-"b_2bleft" : ProductRule("B", "1bleft",stringsum,lambda w: (w[0], w[1:]), sizestr),
+"a_2aleft" : ProductRule("A", "1aleft",stringsum),
+"b_2bleft" : ProductRule("B", "1bleft",stringsum),
 
-"a_1aleft" : ProductRule("A", "b_2bleft",stringsum,lambda w: (w[0], w[1:]), sizestr),
-"b_1aleft" : ProductRule("B","1bleft",stringsum,lambda w: (w[0], w[1:]), sizestr),
-"1aleft" : UnionRule("a_1aleft","eps_1aleft", lambda w: 1 if w=="" else (0 if w[0]=="A" else 1),sizestr),
-"eps_1aleft" : UnionRule("b_1aleft","Vide", lambda w: 1 if w=="" else 0,sizestr),
+"a_1aleft" : ProductRule("A", "b_2bleft",stringsum),
+"b_1aleft" : ProductRule("B","1bleft",stringsum),
+"1aleft" : UnionRule("a_1aleft","eps_1aleft"),
+"eps_1aleft" : UnionRule("b_1aleft","Vide"),
 
-"a_1bleft" : ProductRule("A", "1aleft",stringsum,lambda w: (w[0], w[1:]), sizestr),
-"b_1bleft" : ProductRule("B","a_2aleft",stringsum,lambda w: (w[0], w[1:]), sizestr),
-"1bleft" : UnionRule("a_1bleft","eps_1bleft",lambda w : 1 if w=="" else (0 if w[0]=="B" else 1), sizestr),
-"eps_1bleft" : UnionRule("b_1bleft","Vide",lambda w : 1 if w=="" else 0,sizestr)
+"a_1bleft" : ProductRule("A", "1aleft",stringsum),
+"b_1bleft" : ProductRule("B","a_2aleft",stringsum),
+"1bleft" : UnionRule("a_1bleft","eps_1bleft"),
+"eps_1bleft" : UnionRule("b_1bleft","Vide")
 }
 init_grammar(No3ConsecutiveGram)
 
