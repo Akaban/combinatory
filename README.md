@@ -1,4 +1,6 @@
-# Generation of combinatorial objects described by a grammar
+# Combinatory
+
+## Generation of combinatorial objects described by a grammar
 
 ## Introduction
 
